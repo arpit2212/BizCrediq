@@ -4,7 +4,26 @@ import Header from "../Components/Header/Header";
 
 const ContactUs = () => {
   return (
-    <div className="min-h-screen bg-[#0f1632] relative flex flex-col mt-15">
+    <div className="min-h-screen bg-[#0f1632] relative overflow-hidden flex flex-col mt-12">
+      {/* Starry Background */}
+      <div className="absolute inset-0 z-0">
+        {Array.from({ length: 300 }).map((_, index) => (
+          <div
+            key={index}
+            className="absolute bg-white rounded-full animate-twinkle"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              width: `${Math.random() * 2 + 1}px`, // 1px - 3px
+              height: `${Math.random() * 2 + 1}px`,
+              opacity: Math.random() * 0.8 + 0.2, // Brightness variation
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 3}s`, // Twinkle effect
+            }}
+          ></div>
+        ))}
+      </div>
+
       {/* Page Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
@@ -69,6 +88,19 @@ const ContactUs = () => {
         </div>
         <Footer />
       </div>
+
+      {/* Keyframe Animations */}
+      <style>
+        {`
+          @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+          }
+          .animate-twinkle {
+            animation: twinkle 3s infinite alternate;
+          }
+        `}
+      </style>
     </div>
   );
 };
