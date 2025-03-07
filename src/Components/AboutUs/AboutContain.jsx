@@ -39,6 +39,29 @@ Credit is the trust that allows individuals and businesses to borrow money with 
               />
             </div>
           </div>
+          
+     {/* FAQ Section */}
+     <div className="mt-2 text-left max-w-3xl mx-auto">
+        <h2 className="text-2xl font-semibold text-blue-500 mb-4">Frequently Asked Questions (FAQ)</h2>
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">1. What is a credit score?</h3>
+            <p className="text-gray-700">A credit score is a three-digit number (typically 300-900) that represents your creditworthiness. Banks and financial institutions use it to decide whether to approve loans and credit cards.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">2. How can I improve my credit score?</h3>
+            <p className="text-gray-700">Pay bills on time, reduce debt, avoid excessive credit applications, and maintain a balanced credit mix.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">3. How do banks decide loan approvals?</h3>
+            <p className="text-gray-700">Banks consider your credit score, income stability, existing loans, and financial behavior before approving a loan.</p>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">4. What happens if I default on a loan?</h3>
+            <p className="text-gray-700">Defaults negatively impact your credit score, making it harder to get future loans and leading to legal action in severe cases.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

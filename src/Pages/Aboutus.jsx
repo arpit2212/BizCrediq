@@ -8,6 +8,7 @@ const AboutUs = () => {
         <Header />
         <main className="flex-grow">
          <AboutUsContain/>
+         
         </main>
         <Footer />
       </div>
