@@ -5,6 +5,7 @@ import './index.css';
 import App from './App.jsx';
 import AboutUs from "./Pages/Aboutus.jsx";
 import ContactUs from "./Pages/Contactus.jsx";
+import CustomerG from "./Pages/customerG.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Consumer_Grievance" element={<AboutUs />} />
+        <Route path="/Consumer_Grievance" element={<CustomerG />} />
         <Route path="/ContactUs" element={<ContactUs />} />
       </Routes>
     </Router>

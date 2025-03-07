@@ -21,7 +21,7 @@ const TitlePage = () => {
         <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
         <button
   className="border border-blue-500 hover:bg-blue-500 hover:text-white text-blue-500 px-5 py-2 md:px-6 md:py-3 rounded-lg font-semibold"
-  onClick={() => window.location.href = "https://9e816cbebd6ae5efec.gradio.live/"}
+  onClick={() => window.location.href = "https://9bf1008600e42c7b94.gradio.live/"}
 >
   Report And Analysis
 </button>

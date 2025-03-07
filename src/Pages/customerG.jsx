@@ -1,4 +1,5 @@
-import AboutUsContain from "../Components/AboutUs/AboutContain";
+
+import CustomerGContain from "../Components/CustomerG/CustomerGContatin";
 import Footer from "../Components/Footer/Fotter";
 import Header from "../Components/Header/Header";
 
@@ -7,7 +8,7 @@ const CustomerG = () => {
         <div className="flex flex-col min-h-screen bg-white">
         <Header />
         <main className="flex-grow">
-         <AboutUsContain/>
+         <CustomerGContain/>
          
         </main>
         <Footer />
