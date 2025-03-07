@@ -13,6 +13,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/Consumer_Grievance" element={<AboutUs />} />
         <Route path="/ContactUs" element={<ContactUs />} />
       </Routes>
     </Router>
