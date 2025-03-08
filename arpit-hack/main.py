@@ -1,11 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
-from typing import Dict, Any, Optional
+from pydantic import BaseModel
+from typing import Dict, Any
 import pandas as pd
 import joblib
 import os
-import numpy as np
 
 # Initialize FastAPI app
 app = FastAPI(title="CIBIL Score Prediction API", 
@@ -14,10 +13,10 @@ app = FastAPI(title="CIBIL Score Prediction API",
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all domains (change to specific frontend URL in production)
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Define feature names
@@ -133,4 +132,4 @@ def read_root():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 3000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, port=port)
