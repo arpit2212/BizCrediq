@@ -20,7 +20,7 @@ const Model = () => {
     "Excise Registered": "",
     "GST Filing Status": "",
     "Tax Return Filed": "",
-    "Geography": "",
+    Geography: "",
     "Purpose of Loan": "",
     "Market Forecast": "",
     "Market Stability Years": "",
@@ -63,7 +63,7 @@ const Model = () => {
       "Excise Registered": formData["Excise Registered"],
       "GST Filing Status": formData["GST Filing Status"],
       "Tax Return Filed": formData["Tax Return Filed"],
-      "Geography": formData["Geography"],
+      Geography: formData["Geography"],
       "Purpose of Loan": formData["Purpose of Loan"],
       "Market Forecast": formData["Market Forecast"],
       "Market Stability Years": Number(formData["Market Stability Years"]),
@@ -72,13 +72,21 @@ const Model = () => {
       "Social Media Engagement": formData["Social Media Engagement"],
       "Online Review Rating": Number(formData["Online Review Rating"]),
       "Annual Revenue (in Lakh)": Number(formData["Annual Revenue (in Lakh)"]),
-      "Annual Fixed Expenses (in Lakh)": Number(formData["Annual Fixed Expenses (in Lakh)"]),
-      "Annual Variable Expenses (in Lakh)": Number(formData["Annual Variable Expenses (in Lakh)"]),
-      "Supplier Payments (in Lakh)": Number(formData["Supplier Payments (in Lakh)"]),
+      "Annual Fixed Expenses (in Lakh)": Number(
+        formData["Annual Fixed Expenses (in Lakh)"]
+      ),
+      "Annual Variable Expenses (in Lakh)": Number(
+        formData["Annual Variable Expenses (in Lakh)"]
+      ),
+      "Supplier Payments (in Lakh)": Number(
+        formData["Supplier Payments (in Lakh)"]
+      ),
       "Loan Defaults": formData["Loan Defaults"],
       "Credit Utilization Ratio": Number(formData["Credit Utilization Ratio"]),
       "Digital Invoice Usage": formData["Digital Invoice Usage"],
-      "Bank Transactions (per year)": Number(formData["Bank Transactions (per year)"]),
+      "Bank Transactions (per year)": Number(
+        formData["Bank Transactions (per year)"]
+      ),
       "Collateral Strength": formData["Collateral Strength"],
     };
 
@@ -103,25 +111,26 @@ const Model = () => {
   // Helper function to determine input type
   const getInputType = (key) => {
     if (
-      key.includes("Age") || 
-      key.includes("Years") || 
-      key.includes("Score") || 
-      key.includes("Followers") || 
-      key.includes("Rating") || 
-      key.includes("Lakh") || 
-      key.includes("Ratio") || 
-      key.includes("per year") ||
-      key === "Loan Defaults"
+      key.includes("Age") ||
+      key.includes("Years") ||
+      key.includes("Score") ||
+      key.includes("Followers") ||
+      key.includes("Rating") ||
+      key.includes("Lakh") ||
+      key.includes("Ratio") ||
+      key.includes("per year")
     ) {
       return "number";
     } else if (
-      key === "Licensing Verified" || 
-      key === "Quality Control Verified" || 
-      key === "PAN Registered" || 
-      key === "TAN Registered" || 
-      key === "GST Registered" || 
-      key === "Excise Registered" || 
-      key === "Tax Return Filed"
+      key === "Licensing Verified" ||
+      key === "Quality Control Verified" ||
+      key === "PAN Registered" ||
+      key === "TAN Registered" ||
+      key === "GST Registered" ||
+      key === "Excise Registered" ||
+      key === "Tax Return Filed" ||
+      key === "Loan Defaults" ||
+      key === "Digital Invoice Usage"
     ) {
       return "select";
     }
@@ -152,10 +161,10 @@ const Model = () => {
               <input
                 type={getInputType(key)}
                 name={key}
+                step="any"
                 value={formData[key]}
                 onChange={handleChange}
                 className="p-2 border rounded-lg"
-                step={getInputType(key) === "number" && key === "Credit Utilization Ratio" ? "0.01" : "1"}
                 min={getInputType(key) === "number" ? "0" : undefined}
                 required
               />
@@ -175,7 +184,9 @@ const Model = () => {
       </form>
 
       {creditScore !== null && (
-        <h3 className="mt-4 text-xl font-bold">Predicted CIBIL Score: {creditScore}</h3>
+        <h3 className="mt-4 text-xl font-bold">
+          Predicted CIBIL Score: {creditScore}
+        </h3>
       )}
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
