@@ -55,12 +55,12 @@ const Model = () => {
       "Partnership Type": formData["Partnership Type"],
       "Applicant Age": Number(formData["Applicant Age"]),
       "Associates CIBIL Score": Number(formData["Associates CIBIL Score"]),
-      "Licensing Verified": Number(formData["Licensing Verified"]),
-      "Quality Control Verified": Number(formData["Quality Control Verified"]),
-      "PAN Registered": Number(formData["PAN Registered"]),
-      "TAN Registered": Number(formData["TAN Registered"]),
-      "GST Registered": Number(formData["GST Registered"]),
-      "Excise Registered": Number(formData["Excise Registered"]),
+      "Licensing Verified": formData["Licensing Verified"],
+      "Quality Control Verified": formData["Quality Control Verified"],
+      "PAN Registered": formData["PAN Registered"],
+      "TAN Registered": formData["TAN Registered"],
+      "GST Registered": formData["GST Registered"],
+      "Excise Registered": formData["Excise Registered"],
       "GST Filing Status": formData["GST Filing Status"],
       "Tax Return Filed": formData["Tax Return Filed"],
       "Geography": formData["Geography"],
@@ -69,7 +69,7 @@ const Model = () => {
       "Market Stability Years": Number(formData["Market Stability Years"]),
       "USP Strength": formData["USP Strength"],
       "Social Media Followers": Number(formData["Social Media Followers"]),
-      "Social Media Engagement": Number(formData["Social Media Engagement"]),
+      "Social Media Engagement": formData["Social Media Engagement"],
       "Online Review Rating": Number(formData["Online Review Rating"]),
       "Annual Revenue (in Lakh)": Number(formData["Annual Revenue (in Lakh)"]),
       "Annual Fixed Expenses (in Lakh)": Number(formData["Annual Fixed Expenses (in Lakh)"]),
@@ -94,10 +94,38 @@ const Model = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Failed to fetch CIBIL score");
+      setError(error.response?.data?.detail || "Failed to fetch CIBIL score");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Helper function to determine input type
+  const getInputType = (key) => {
+    if (
+      key.includes("Age") || 
+      key.includes("Years") || 
+      key.includes("Score") || 
+      key.includes("Followers") || 
+      key.includes("Rating") || 
+      key.includes("Lakh") || 
+      key.includes("Ratio") || 
+      key.includes("per year") ||
+      key === "Loan Defaults"
+    ) {
+      return "number";
+    } else if (
+      key === "Licensing Verified" || 
+      key === "Quality Control Verified" || 
+      key === "PAN Registered" || 
+      key === "TAN Registered" || 
+      key === "GST Registered" || 
+      key === "Excise Registered" || 
+      key === "Tax Return Filed"
+    ) {
+      return "select";
+    }
+    return "text";
   };
 
   return (
@@ -108,14 +136,30 @@ const Model = () => {
         {Object.keys(formData).map((key) => (
           <div key={key} className="flex flex-col">
             <label className="font-medium">{key}</label>
-            <input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              className="p-2 border rounded-lg"
-              required
-            />
+            {getInputType(key) === "select" ? (
+              <select
+                name={key}
+                value={formData[key]}
+                onChange={handleChange}
+                className="p-2 border rounded-lg"
+                required
+              >
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            ) : (
+              <input
+                type={getInputType(key)}
+                name={key}
+                value={formData[key]}
+                onChange={handleChange}
+                className="p-2 border rounded-lg"
+                step={getInputType(key) === "number" && key === "Credit Utilization Ratio" ? "0.01" : "1"}
+                min={getInputType(key) === "number" ? "0" : undefined}
+                required
+              />
+            )}
           </div>
         ))}
 
