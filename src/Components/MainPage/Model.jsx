@@ -20,7 +20,7 @@ const Model = () => {
     "Excise Registered": "",
     "GST Filing Status": "",
     "Tax Return Filed": "",
-    "Geography": "",
+    Geography: "",
     "Purpose of Loan": "",
     "Market Forecast": "",
     "Market Stability Years": "",
@@ -55,35 +55,43 @@ const Model = () => {
       "Partnership Type": formData["Partnership Type"],
       "Applicant Age": Number(formData["Applicant Age"]),
       "Associates CIBIL Score": Number(formData["Associates CIBIL Score"]),
-      "Licensing Verified": Number(formData["Licensing Verified"]),
-      "Quality Control Verified": Number(formData["Quality Control Verified"]),
-      "PAN Registered": Number(formData["PAN Registered"]),
-      "TAN Registered": Number(formData["TAN Registered"]),
-      "GST Registered": Number(formData["GST Registered"]),
-      "Excise Registered": Number(formData["Excise Registered"]),
+      "Licensing Verified": formData["Licensing Verified"],
+      "Quality Control Verified": formData["Quality Control Verified"],
+      "PAN Registered": formData["PAN Registered"],
+      "TAN Registered": formData["TAN Registered"],
+      "GST Registered": formData["GST Registered"],
+      "Excise Registered": formData["Excise Registered"],
       "GST Filing Status": formData["GST Filing Status"],
       "Tax Return Filed": formData["Tax Return Filed"],
-      "Geography": formData["Geography"],
+      Geography: formData["Geography"],
       "Purpose of Loan": formData["Purpose of Loan"],
       "Market Forecast": formData["Market Forecast"],
       "Market Stability Years": Number(formData["Market Stability Years"]),
       "USP Strength": formData["USP Strength"],
       "Social Media Followers": Number(formData["Social Media Followers"]),
-      "Social Media Engagement": Number(formData["Social Media Engagement"]),
+      "Social Media Engagement": formData["Social Media Engagement"],
       "Online Review Rating": Number(formData["Online Review Rating"]),
       "Annual Revenue (in Lakh)": Number(formData["Annual Revenue (in Lakh)"]),
-      "Annual Fixed Expenses (in Lakh)": Number(formData["Annual Fixed Expenses (in Lakh)"]),
-      "Annual Variable Expenses (in Lakh)": Number(formData["Annual Variable Expenses (in Lakh)"]),
-      "Supplier Payments (in Lakh)": Number(formData["Supplier Payments (in Lakh)"]),
+      "Annual Fixed Expenses (in Lakh)": Number(
+        formData["Annual Fixed Expenses (in Lakh)"]
+      ),
+      "Annual Variable Expenses (in Lakh)": Number(
+        formData["Annual Variable Expenses (in Lakh)"]
+      ),
+      "Supplier Payments (in Lakh)": Number(
+        formData["Supplier Payments (in Lakh)"]
+      ),
       "Loan Defaults": formData["Loan Defaults"],
       "Credit Utilization Ratio": Number(formData["Credit Utilization Ratio"]),
       "Digital Invoice Usage": formData["Digital Invoice Usage"],
-      "Bank Transactions (per year)": Number(formData["Bank Transactions (per year)"]),
+      "Bank Transactions (per year)": Number(
+        formData["Bank Transactions (per year)"]
+      ),
       "Collateral Strength": formData["Collateral Strength"],
     };
 
     try {
-      const response = await axios.post("http://localhost:8000/predict", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/predict`, {
         data: formattedData,
       });
 
@@ -94,10 +102,39 @@ const Model = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Failed to fetch CIBIL score");
+      setError(error.response?.data?.detail || "Failed to fetch CIBIL score");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Helper function to determine input type
+  const getInputType = (key) => {
+    if (
+      key.includes("Age") ||
+      key.includes("Years") ||
+      key.includes("Score") ||
+      key.includes("Followers") ||
+      key.includes("Rating") ||
+      key.includes("Lakh") ||
+      key.includes("Ratio") ||
+      key.includes("per year")
+    ) {
+      return "number";
+    } else if (
+      key === "Licensing Verified" ||
+      key === "Quality Control Verified" ||
+      key === "PAN Registered" ||
+      key === "TAN Registered" ||
+      key === "GST Registered" ||
+      key === "Excise Registered" ||
+      key === "Tax Return Filed" ||
+      key === "Loan Defaults" ||
+      key === "Digital Invoice Usage"
+    ) {
+      return "select";
+    }
+    return "text";
   };
 
   return (
@@ -108,14 +145,30 @@ const Model = () => {
         {Object.keys(formData).map((key) => (
           <div key={key} className="flex flex-col">
             <label className="font-medium">{key}</label>
-            <input
-              type="text"
-              name={key}
-              value={formData[key]}
-              onChange={handleChange}
-              className="p-2 border rounded-lg"
-              required
-            />
+            {getInputType(key) === "select" ? (
+              <select
+                name={key}
+                value={formData[key]}
+                onChange={handleChange}
+                className="p-2 border rounded-lg"
+                required
+              >
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            ) : (
+              <input
+                type={getInputType(key)}
+                name={key}
+                step="any"
+                value={formData[key]}
+                onChange={handleChange}
+                className="p-2 border rounded-lg"
+                min={getInputType(key) === "number" ? "0" : undefined}
+                required
+              />
+            )}
           </div>
         ))}
 
@@ -131,7 +184,9 @@ const Model = () => {
       </form>
 
       {creditScore !== null && (
-        <h3 className="mt-4 text-xl font-bold">Predicted CIBIL Score: {creditScore}</h3>
+        <h3 className="mt-4 text-xl font-bold">
+          Predicted CIBIL Score: {creditScore}
+        </h3>
       )}
       {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
