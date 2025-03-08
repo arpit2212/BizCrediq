@@ -91,7 +91,7 @@ const Model = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8000/predict", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/predict`, {
         data: formattedData,
       });
 
